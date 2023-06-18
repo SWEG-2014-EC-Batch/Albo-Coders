@@ -1,0 +1,29 @@
+#include <iostream>
+using namespace std;
+void swapValues(int& a, int& b) {
+    int temp = a;
+    a = b;
+    b = temp;
+}
+
+void arrangeValues(int& a, int& b, int& c) {
+    cout << "Before swapping: a = " << a << ", b = " << b << ", c = " << c << endl;
+
+    if (a < b) {
+        swapValues(a, b);
+    }
+    if (a < c) {
+        swapValues(a, c);
+    }
+    if (b < c) {
+        swapValues(b, c);
+    }
+
+    cout << "After swapping: a = " << a << ", b = " << b << ", c = " << c << endl;
+}
+
+int main() {
+    int a = 5, b = 10, c = 3;
+    arrangeValues(a, b, c);
+    return 0;
+}
