@@ -8,7 +8,8 @@ Welcome to the GitHub repository for the Albo Girls Group! We are a vibrant grou
 - Hermela Ejigu
 - Hermela Dereje
 - Hewan  Alemayehu  
--Hilina Fiseha 
+- Hilina Fiseha
+  
  We actively participate in numerous initiatives and activities to hone our programming abilities and support one another. 
 # Involvements and Projects 
  Our projects at Albo Girls Group are centered on technology and programming. Our primary goals are as follows: 
