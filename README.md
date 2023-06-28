@@ -26,7 +26,7 @@ We welcome new ideas who share our vision and want to contribute to our projects
 -Participate in Discussions: Engage with other group members by participating in discussions, sharing ideas, and offering support. Our community thrives on active collaboration and knowledge exchange. 
  
 # Contact Us 
- We're excited to have you as part of the Albo Girls Group! If you have any questions, suggestions, or need assistance, please don't hesitate to contact us via [ hewanalemayeh2815@gmail.com  EnuyaLove1234@gmail.com   ]. 
+ We're excited to have you as part of the Albo Girls Group! If you have any questions, suggestions, or need assistance, please don't hesitate to contact us via [ hewanalemayeh2815@gmail.com  EnuyaLove1234@gmail.com  hermelaejigu4@gmail.com ]. 
  Happy coding and collaboration! 
  
 -The Albo Girls Group Team
