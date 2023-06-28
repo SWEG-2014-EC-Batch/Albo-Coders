@@ -1,6 +1,6 @@
 #include<iostream>
 using namespace std;
-//Structure with student attribute to calculate sum of mark
+//Structure with student attribute to calculate sum of mark.
 
 struct student{
     int id;
