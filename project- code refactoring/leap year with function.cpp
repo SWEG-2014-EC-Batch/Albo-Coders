@@ -40,3 +40,12 @@ void printLeapYears(int year) {
             count++;
         }
     }
+cout << "Here are the next twenty leap years: ";
+    for (int i = 0; i < 20; ++i) {
+        cout << leapYears[i];
+        if (i != 19) {
+            cout << ", ";
+        }
+    }
+    cout << endl;
+}
