@@ -110,3 +110,48 @@ RainfallData loadRainfallData()
 
     return data;
 }
+int main()
+{
+    RainfallData data;
+
+    for (int i = 0; i < NUM_MONTHS; ++i)
+    {
+        cout << "Enter the average rainfall for " << MONTHS[i] << ": ";
+        cin >> data.monthlyRainfall[i];
+    }
+
+    string currentMonth;
+    cout << "Enter the current month: ";
+    cin >> currentMonth;
+
+    int startIndex = -1;
+    for (int i = 0; i < NUM_MONTHS; ++i)
+    {
+        if (currentMonth == MONTHS[i])
+        {
+            startIndex = i;
+            break;
+        }
+    }
+
+    if (startIndex == -1)
+    {
+        cout << "Invalid month entered.\n";
+        return 0;
+    }
+
+    for (int i = startIndex, count = 0; count < NUM_MONTHS; ++i, ++count)
+    {
+        if (i == NUM_MONTHS)
+            i = 0;
+
+        cout << "Enter the rainfall for " << MONTHS[i] << ": ";
+        cin >> data.monthlyRainfall[i];
+    }
+
+    double sum = 0;
+    for (int i = 0; i < NUM_MONTHS; ++i)
+    {
+        sum += data.monthlyRainfall[i];
+    }
+    data.averageRainfall = sum / NUM_MONTHS;
