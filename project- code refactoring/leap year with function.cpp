@@ -49,3 +49,63 @@ cout << "Here are the next twenty leap years: ";
     }
     cout << endl;
 }
+
+
+int main() {
+    int day, month, year;
+
+    while (true) {
+        cout << "Please enter a date (dd mm yyyy): ";
+        cin >> day >> month >> year;
+
+        if (!isValidDate(day, month, year)) {
+            if (month < 1 || month > 12) {
+                cout << "Invalid month: " << month << endl;
+            } else {
+                cout << "Invalid day of month " << day << endl;
+            }
+        } else {
+            cout << day << "/" << month << "/" << year << " is a valid date";
+            if (isLeapYear(year)) {
+                cout << " and also a Leap Year" << endl;
+                printLeapYears(year);
+            } else {
+                cout << " but not a Leap Year" << endl;
+            }
+        }
+
+        cout << endl;
+    }
+
+    return 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
