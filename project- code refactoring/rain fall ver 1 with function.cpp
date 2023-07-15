@@ -48,3 +48,19 @@ cout << "Enter the current month (1-12): ";
         cout << MONTH_NAMES[monthIndex] << ": ";
         cin >> actualRainfall[monthIndex];
     }
+while (true) {
+        cout << "Do you want to see the table or the bar graph? (t/b/q): ";
+        char choice;
+        cin >> choice;
+        if (choice == 't') {
+            printTable(avgRainfall, actualRainfall);
+        } else if (choice == 'b') {
+            printBarGraph(avgRainfall, actualRainfall);
+        } else if (choice == 'q') {
+            break;
+        } else {
+            cout << "Invalid choice. Please try again." << endl;
+        }
+    }
+    return 0;
+}
