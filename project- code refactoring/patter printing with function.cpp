@@ -44,3 +44,16 @@ cout << " ";
         }
         for (int k = space; k > 0; k--)
         {
+
+int main()
+{
+    char letter, limit;
+    int space = -1;
+
+    cout << "Enter a letter or a digit: " << endl;
+    cin >> letter;
+
+    if (letter >= '1' && letter <= '9')
+    {
+        limit = '0';
+    }
