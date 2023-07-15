@@ -28,3 +28,15 @@ bool isValidDate(int day, int month, int year) {
 
     return true;
 }
+
+void printLeapYears(int year) {
+    int leapYears[20];
+    int count = 0;
+
+    while (count < 20) {
+        year++;
+        if (isLeapYear(year)) {
+            leapYears[count] = year;
+            count++;
+        }
+    }
