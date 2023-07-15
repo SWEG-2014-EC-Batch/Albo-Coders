@@ -71,3 +71,42 @@ void saveRainfallData(const RainfallData& data)
         cout << "Unable to open the file for saving the data.\n";
     }
 }
+
+RainfallData loadRainfallData()
+{
+    RainfallData data;
+
+    ifstream inputFile("rainfall_data.txt");
+    if (inputFile.is_open())
+    {
+        string line;
+        while (getline(inputFile, line))
+        {
+            if (line.find("Average Rainfall:") != string::npos)
+            {
+                size_t pos = line.find(":");
+                data.averageRainfall = stod(line.substr(pos + 1));
+            }
+            else
+            {
+                for (int i = 0; i < NUM_MONTHS; ++i)
+                {
+                    if (line.find(MONTHS[i] + ":") != string::npos)
+                    {
+                        size_t pos = line.find(":");
+                        data.monthlyRainfall[i] = stod(line.substr(pos + 1));
+                        break;
+                    }
+                }
+            }
+        }
+        inputFile.close();
+        cout << "Rainfall data loaded from 'rainfall_data.txt'.\n";
+    }
+    else
+    {
+        cout << "Unable to open the file for loading the data.\n";
+    }
+
+    return data;
+}
