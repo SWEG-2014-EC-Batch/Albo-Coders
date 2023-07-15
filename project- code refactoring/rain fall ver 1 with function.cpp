@@ -30,3 +30,13 @@ void printBarGraph(const double avgRainfall[], const double actualRainfall[]) {
         cout << endl;
     }
 }
+
+int main() {
+    double avgRainfall[NUM_MONTHS];
+    double actualRainfall[NUM_MONTHS];
+    int currentMonth;
+    cout << "Enter the average monthly rainfall for Addis Ababa city for each month of the year:" << endl;
+    for (int i = 0; i < NUM_MONTHS; i++) {
+        cout << MONTH_NAMES[i] << ": ";
+        cin >> avgRainfall[i];
+    }
