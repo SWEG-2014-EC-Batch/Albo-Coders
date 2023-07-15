@@ -65,3 +65,13 @@ else if (letter >= 'a' && letter <= 'z')
     {
         limit = 'A';
     }
+  else
+    {
+        cout << "Invalid input." << endl;
+        return 0;
+    }
+
+    printPattern(letter, limit, space);
+
+    return 0;
+}
