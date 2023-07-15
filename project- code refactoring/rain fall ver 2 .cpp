@@ -30,3 +30,44 @@ void displayRainfallTable(const RainfallData& data)
         cout << right << setw(10) << deviation << endl;
     }
 }
+
+void displayRainfallBarGraph(const RainfallData& data)
+{
+    cout << "Month\t\tRainfall\tBar Graph\n";
+    cout << "--------------------------------------------\n";
+
+    for (int i = 0; i < NUM_MONTHS; ++i)
+    {
+        double rainfall = data.monthlyRainfall[i];
+
+        cout << left << setw(10) << MONTHS[i];
+        cout << right << setw(10) << rainfall;
+
+        // Print bar graph
+        for (int j = 0; j < static_cast<int>(rainfall); ++j)
+        {
+            cout << "*";
+        }
+
+        cout << endl;
+    }
+}
+
+void saveRainfallData(const RainfallData& data)
+{
+    ofstream outputFile("rainfall_data.txt");
+    if (outputFile.is_open())
+    {
+        outputFile << "Average Rainfall: " << data.averageRainfall << endl;
+        for (int i = 0; i < NUM_MONTHS; ++i)
+        {
+            outputFile << MONTHS[i] << ": " << data.monthlyRainfall[i] << endl;
+        }
+        outputFile.close();
+        cout << "Rainfall data saved to 'rainfall_data.txt'.\n";
+    }
+    else
+    {
+        cout << "Unable to open the file for saving the data.\n";
+    }
+}
