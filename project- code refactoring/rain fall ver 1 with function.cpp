@@ -40,3 +40,11 @@ int main() {
         cout << MONTH_NAMES[i] << ": ";
         cin >> avgRainfall[i];
     }
+cout << "Enter the current month (1-12): ";
+    cin >> currentMonth;
+    cout << "Enter the actual monthly rainfall for each of the previous 12 months:" << endl;
+    for (int i = 0; i < NUM_MONTHS; i++) {
+        int monthIndex = (currentMonth - i - 1 + NUM_MONTHS) % NUM_MONTHS;
+        cout << MONTH_NAMES[monthIndex] << ": ";
+        cin >> actualRainfall[monthIndex];
+    }
