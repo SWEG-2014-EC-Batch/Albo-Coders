@@ -155,3 +155,55 @@ int main()
         sum += data.monthlyRainfall[i];
     }
     data.averageRainfall = sum / NUM_MONTHS;
+    char choice;
+    do
+    {
+        cout << "\nMenu:\n";
+        cout << "1. Display rainfall table\n";
+        cout << "2. Display rainfall bar graph\n";
+        cout << "3. Search for a specific month\n";
+        cout << "4. Save rainfall data to a file\n";
+        cout << "5. Load rainfall data from a file\n";
+        cout << "6. Exit\n";
+        cout << "Enter your choice: ";
+        cin >> choice;
+
+        switch (choice)
+        {
+        case '1':
+            displayRainfallTable(data);
+            break;
+        case '2':
+            displayRainfallBarGraph(data);
+            break;
+        case '3':
+            cout << "Enter the month to search: ";
+            cin >> currentMonth;
+            for (int i = 0; i < NUM_MONTHS; ++i)
+            {
+                if (currentMonth == MONTHS[i])
+                {
+                    cout << "Rainfall for " << currentMonth << ": " << data.monthlyRainfall[i] << " mm\n";
+                    displayRainfallTable({ data.monthlyRainfall[i] });
+                    displayRainfallBarGraph({ data.monthlyRainfall[i] });
+                    break;
+                }
+            }
+            break;
+        case '4':
+            saveRainfallData(data);
+            break;
+        case '5':
+            data = loadRainfallData();
+            break;
+        case '6':
+            cout << "Exiting the program. Goodbye!\n";
+            break;
+        default:
+            cout << "Invalid choice. Please try again.\n";
+            break;
+        }
+    } while (choice != '6');
+
+    return 0;
+}
