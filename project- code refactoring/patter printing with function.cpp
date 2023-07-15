@@ -57,3 +57,11 @@ int main()
     {
         limit = '0';
     }
+else if (letter >= 'a' && letter <= 'z')
+    {
+        limit = 'a';
+    }
+    else if (letter >= 'A' && letter <= 'Z')
+    {
+        limit = 'A';
+    }
