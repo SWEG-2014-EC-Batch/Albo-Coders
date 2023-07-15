@@ -15,3 +15,18 @@ void printTable(const double avgRainfall[], const double actualRainfall[]) {
     }
 }
 
+void printBarGraph(const double avgRainfall[], const double actualRainfall[]) {
+    cout << "Average Rainfall (mm) | Actual Rainfall (mm)" << endl;
+    for (int i = 0; i < NUM_MONTHS; i++) {
+        cout << setw(10) << MONTH_NAMES[i] << " | ";
+        for (int j = 0; j < 2; j++) {
+            double rainfall = (j == 0) ? avgRainfall[i] : actualRainfall[i];
+            int numStars = static_cast<int>(rainfall / 10.0);
+            for (int k = 0; k < numStars; k++) {
+                cout << "*";
+            }
+            cout << " | ";
+        }
+        cout << endl;
+    }
+}
