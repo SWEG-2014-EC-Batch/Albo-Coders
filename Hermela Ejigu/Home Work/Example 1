@@ -1,0 +1,22 @@
+#include<iostream>
+#include <set>
+
+using namespace std;
+
+
+int main() {
+  set<int> numbers;
+
+  numbers.insert(10);
+  numbers.insert(5);
+  numbers.insert(2);
+  numbers.insert(10); // Duplicate element, will be ignored
+
+  // Display the elements in sorted order
+  for (const auto& num : numbers) {
+    cout << num << " ";
+  }
+   cout << endl;
+
+  return 0;
+}
