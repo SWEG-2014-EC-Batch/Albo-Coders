@@ -1,0 +1,33 @@
+#include <iostream>
+#include <set>
+using namespace std;
+
+int main() {
+    // Create a multiset of strings
+    multiset<string> fruits;
+
+    // Insert elements into the multiset
+    fruits.insert("apple");
+    fruits.insert("banana");
+    fruits.insert("orange");
+    fruits.insert("apple"); // Allowing duplicate elements
+
+    // Print the elements in the multiset
+    for (const auto& fruit : fruits) {
+        cout << fruit << " ";
+    }
+    cout << endl;
+
+    // Count the occurrences of a specific element
+    int count = fruits.count("apple");
+    cout << "Count of 'apple': " << count << endl;
+
+    // Remove elements from the multiset
+    fruits.erase("banana");
+
+    // Check if an element exists in the multiset
+    bool exists = fruits.find("orange") != fruits.end();
+    cout << "Element 'orange' exists: " << boolalpha << exists << endl;
+
+    return 0;
+}
