@@ -1,0 +1,21 @@
+#include <iostream>
+#include <set>
+using namespace std;
+
+int main() {
+  set<int> numbers;
+
+  numbers.insert(10);
+  numbers.insert(5);
+  numbers.insert(2);
+
+  // Search for an element
+  auto it = numbers.find(5);
+  if (it != numbers.end()) {
+   cout << "Found element: " << *it << endl;
+  } else {
+    cout << "Element not found." << endl;
+  }
+
+  return 0;
+}
