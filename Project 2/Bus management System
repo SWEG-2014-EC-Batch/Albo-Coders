@@ -129,3 +129,127 @@ void displaySeatingChart() {
         cout << endl;
     }
 }
+void add_customer() {
+    cout << "PLEASE FILL IN THE DATA.\n";
+
+    Customer info;
+    info.customer_ID = numCustomers + 1;
+
+    cout << "First Name: ";
+    cin >> info.Fname;
+
+    cout << "Last Name: ";
+    cin >> info.Lname;
+
+    cout << "Age: ";
+    cin >> info.age;
+
+    cout << "Gender: ";
+    cin >> info.gender;
+
+    cout << "Phone number: ";
+    cin >> info.phone_number;
+
+    cout << "Prepaid Balance: ";
+    cin >> info.prepaidBalance;
+
+    info.hasCriminalRecord = false;
+    info.loyaltyPoints = 0;
+
+    customers[numCustomers] = info;
+    numCustomers++;
+}
+
+void search_customer() {
+    int ID, count = 0;
+    cout << "Enter the customer ID you want to search: ";
+    cin >> ID;
+
+    for (int i = 0; i < numCustomers; i++) {
+        if (customers[i].customer_ID == ID) {
+            cout << "Customer Found:\n";
+            cout << "Customer ID: " << customers[i].customer_ID << endl;
+            cout << "Name: " << customers[i].Fname << " " << customers[i].Lname << endl;
+            cout << "Age: " << customers[i].age << endl;
+            cout << "Gender: " << customers[i].gender << endl;
+            cout << "Phone number: " << customers[i].phone_number << endl;
+            cout << "Prepaid Balance: " << customers[i].prepaidBalance << endl;
+            count++;
+            break;
+        }
+    }
+
+    if (count == 0) {
+        cout << "Customer with customer ID " << ID << " not found.\n";
+    }
+    customSleep(2000);
+}
+
+void delete_customer() {
+    int ID, count = 0;
+    cout << "DELETE CUSTOMER" << endl;
+    cout << "Enter customer's ID you want to delete: ";
+    cin >> ID;
+
+    for (int i = 0; i < numCustomers; i++) {
+        if (customers[i].customer_ID == ID) {
+            for (int j = i; j < numCustomers - 1; j++) {
+                customers[j] = customers[j + 1];
+            }
+            numCustomers--;
+            count++;
+            break;
+        }
+    }
+
+    if (count == 0) {
+        cout << "Customer record not found!" << endl;
+    } else {
+        cout << "Customer record deleted successfully!" << endl;
+    }
+    customSleep(2000);
+}
+
+
+void calculate_price() {
+    cout << "Calculate price function called (placeholder).\n";
+}
+
+void display_all_customer() {
+    customClearScreen();
+    cout << "-----------------------------------------------------------------------------------------------------------------------------\n";
+    cout << setw(12) << "CUSTOMERID" << setw(20) << "FIRST-NAME" << setw(20) << "LAST-NAME" << setw(8) << "AGE" << setw(10) << "GENDER" << setw(18) << "PHONE NUMBER" << setw(20) << "PREPAID BALANCE\n";
+    cout << "-----------------------------------------------------------------------------------------------------------------------------\n";
+
+    for (int i = 0; i < numCustomers; i++) {
+        cout << setw(12) << customers[i].customer_ID << setw(20) << customers[i].Fname << setw(20) << customers[i].Lname << setw(8) << customers[i].age << setw(10) << customers[i].gender << setw(18) << customers[i].phone_number << setw(20) << customers[i].prepaidBalance << endl;
+    }
+
+    customSleep(2000);
+}
+
+
+bool checkTravelerLegality(const Customer& customer) {
+    if (customer.age < 18) {
+        cout << "Sorry, " << customer.Fname << ", you must be at least 18 years old to travel.\n";
+        return false;
+    } else if (customer.hasCriminalRecord) {
+        cout << "Sorry, " << customer.Fname << ", you are not allowed to travel due to a criminal record.\n";
+        return false;
+    }
+    return true;
+}
+
+void updateLoyaltyPoints(Customer& customer, int points) {
+    customer.loyaltyPoints += points;
+    cout << customer.Fname << " earned " << points << " loyalty points. Total points: " << customer.loyaltyPoints << endl;
+}
+void generateReceipt(const Customer& customer, int pointsEarned) {
+    cout << "\nReceipt Information:\n";
+    cout << "------------------------\n";
+    cout << "Customer ID: " << customer.customer_ID << "\n";
+    cout << "Name: " << customer.Fname << " " << customer.Lname << "\n";
+    cout << "Phone Number: " << customer.phone_number << "\n";
+    cout << "Points Earned: " << pointsEarned << "\n";
+    cout << "------------------------\n";
+}
