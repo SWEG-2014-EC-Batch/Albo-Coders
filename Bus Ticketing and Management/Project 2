@@ -1,0 +1,124 @@
+#include <iostream>
+#include <string>
+#include <vector>
+#include <iomanip>
+using namespace std;
+
+#ifdef _WIN32
+#include <windows.h>
+#else
+#include <unistd.h>
+#endif
+
+void customPressAnyKey() {
+    cout << "Press any key to continue...";
+    cin.ignore(); // Ignore all characters until a newline
+    cin.get(); // Wait for a key press
+}
+
+// Function to mimic Sleep on both Windows and Unix-based systems
+void customSleep(int milliseconds) {
+    #ifdef _WIN32
+    Sleep(milliseconds);
+    #else
+    usleep(milliseconds * 1000);  // usleep uses microseconds
+    #endif
+    customPressAnyKey();
+}
+
+// Function to clear the console screen on both Windows and Unix-based systems
+void customClearScreen() {
+    #ifdef _WIN32
+    system("cls");
+    #else
+    system("clear");
+    #endif
+}
+
+const int MAX_ROWS = 5;
+const int MAX_COLS = 10;
+const double FARE_AMOUNT = 20.0;
+
+struct Customer {
+    int customer_ID;
+    string Fname;
+    string Lname;
+    int age;
+    string gender;
+    string phone_number;
+    bool hasCriminalRecord;
+    int loyaltyPoints;
+    double prepaidBalance;
+};
+
+bool seats[MAX_ROWS][MAX_COLS] = {false};
+Customer customers[MAX_ROWS * MAX_COLS];
+int numCustomers = 0;
+
+void displayAvailableSeats() {
+    customClearScreen();
+    cout << "Seating Chart:\n";
+    for (int row = 0; row < MAX_ROWS; row++) {
+        for (int col = 0; col < MAX_COLS; col++) {
+            if (seats[row][col]) {
+                cout << "[ X ] ";
+            } else {
+                cout << "[    ] ";
+            }
+        }
+        cout << endl;
+    }
+}
+
+void generateTicket(int row, int col, const Customer& customer) {
+    cout << "\nTicket Information:\n";
+    cout << "------------------------\n";
+    cout << "Seat: Row " << row << ", Col " << col << "\n";
+    cout << "Customer ID: " << customer.customer_ID << "\n";
+    cout << "Name: " << customer.Fname << " " << customer.Lname << "\n";
+    cout << "Age: " << customer.age << "\n";
+    cout << "Gender: " << customer.gender << "\n";
+    cout << "Phone Number: " << customer.phone_number << "\n";
+    cout << "------------------------\n";
+}
+
+void reserveSeat(Customer& customer) {
+    int row, col;
+
+    displayAvailableSeats();
+
+    cout << "Enter the row and column to reserve (e.g., 2 3): ";
+    cin >> row >> col;
+
+    if (row >= 0 && row < MAX_ROWS && col >= 0 && col < MAX_COLS) {
+        if (!seats[row][col]) {
+            if (customer.prepaidBalance >= FARE_AMOUNT) {
+                customer.prepaidBalance -= FARE_AMOUNT;
+                seats[row][col] = true;
+                cout << "Seat at Row " << row << ", Col " << col << " has been reserved.\n";
+                generateTicket(row, col, customer);
+            } else {
+                cout << "Insufficient prepaid balance to reserve the seat.\n";
+            }
+        } else {
+            cout << "Invalid seat selection. The seat is already occupied.\n";
+        }
+    } else {
+        cout << "Invalid seat selection.\n";
+    }
+    customSleep(2000);
+}
+
+bool isSeatAvailable(int row, int col) {
+    if (row >= 0 && row < MAX_ROWS && col >= 0 && col < MAX_COLS) {
+        return !seats[row][col];
+    }
+    return false;
+}
+
+void displaySeatingChart() {
+    cout << "Seating Chart:\n";
+    for (int row = 0; row < MAX_ROWS; row++) {
+        for (int col = 0; col < MAX_COLS; col++) {
+            if (seats[row][col]) {
+                cout << "X ";
