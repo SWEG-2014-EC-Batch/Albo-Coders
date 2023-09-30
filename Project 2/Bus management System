@@ -253,3 +253,147 @@ void generateReceipt(const Customer& customer, int pointsEarned) {
     cout << "Points Earned: " << pointsEarned << "\n";
     cout << "------------------------\n";
 }
+
+int main() {
+    int choice;
+
+    do {
+        customClearScreen();
+        cout << "----- Bus Management System -----\n";
+        cout << "1. Add Customer\n";
+        cout << "2. Reserve a Seat\n";
+        cout << "3. Check Seat Availability\n";
+        cout << "4. Delete Customer\n";
+        cout << "5. Search Customer\n";
+        cout << "6. Calculate Price\n";
+        cout << "7. Display All Customers\n";
+        cout << "8. Check Traveler Legality\n";
+        cout << "9. Update Loyalty Points\n";
+        cout << "0. Exit\n";
+        cout << "-------------------------------------------\n";
+        cout << "Enter your choice: ";
+        cin >> choice;
+
+        switch (choice) {
+    case 1: {
+        // Option 1: Add Customer
+        add_customer();
+        break;
+    }
+    case 2: {
+        // Option 2: Reserve a Seat
+        int customerID;
+        cout << "Enter the customer ID: ";
+        cin >> customerID;
+
+        bool found = false;
+        for (int i = 0; i < numCustomers; i++) {
+            if (customers[i].customer_ID == customerID) {
+                found = true;
+                reserveSeat(customers[i]);
+                break;
+            }
+        }
+
+        if (!found) {
+            cout << "Customer with ID " << customerID << " not found.\n";
+            customSleep(2000);
+        }
+        break;
+    }
+    case 3: {
+        // Option 3: Check Seat Availability
+        int row, col;
+        cout << "Enter the row and column to check (e.g., 2 3): ";
+        cin >> row >> col;
+
+        if (isSeatAvailable(row, col)) {
+            cout << "Seat at Row " << row << ", Col " << col << " is available.\n";
+        } else {
+            cout << "Seat at Row " << row << ", Col " << col << " is not available.\n";
+        }
+        customSleep(2000);
+        break;
+    }
+    case 4: {
+        // Option 4: Delete Customer
+        delete_customer();
+        break;
+    }
+    case 5: {
+        // Option 5: Search Customer
+        search_customer();
+        break;
+    }
+    case 6: {
+        // Option 6: Calculate Price
+        calculate_price();
+        break;
+    }
+    case 7: {
+        // Option 7: Display All Customers
+        display_all_customer();
+        break;
+    }
+    case 8: {
+        // Option 8: Check Traveler Legality
+        int customerID;
+        cout << "Enter the customer ID: ";
+        cin >> customerID;
+
+        bool found = false;
+        for (int i = 0; i < numCustomers; i++) {
+            if (customers[i].customer_ID == customerID) {
+                found = true;
+                checkTravelerLegality(customers[i]);
+                break;
+            }
+        }
+
+        if (!found) {
+            cout << "Customer with ID " << customerID << " not found.\n";
+            customSleep(2000);
+        }
+        break;
+    }
+    case 9: {
+        // Option 9: Update Loyalty Points
+        int customerID, points;
+        cout << "Enter the customer ID: ";
+        cin >> customerID;
+        cout << "Enter the points to update: ";
+        cin >> points;
+
+        bool found = false;
+        for (int i = 0; i < numCustomers; i++) {
+            if (customers[i].customer_ID == customerID) {
+                found = true;
+                updateLoyaltyPoints(customers[i], points);
+                break;
+            }
+        }
+
+        if (!found) {
+            cout << "Customer with ID " << customerID << " not found.\n";
+            customSleep(2000);
+        }
+        break;
+    }
+    case 0: {
+        // Option 0: Exit
+        cout << "Exiting...\n";
+        break;
+    }
+    default: {
+        // Default case for invalid choices
+        cout << "Invalid choice. Please try again.\n";
+        customSleep(2000);
+        break;
+    }
+}
+
+
+    } while (choice != 0);
+
+    return 0;
+}
