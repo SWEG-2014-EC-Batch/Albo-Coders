@@ -2,7 +2,9 @@
 #include <string>
 #include <fstream>
 #include <iomanip>
+#include <algorithm>
 #include <vector>
+
 using namespace std;
 
 // Define the customer struct
@@ -69,7 +71,7 @@ void displaySeatingChart() {
 }
 
 // Function to add a customer to the file
-Customer add_customer() 
+Customer add_customer()
 {
     fstream File;
     cout << "PLEASE FILL IN THE DATA.\n";
@@ -120,8 +122,25 @@ Customer add_customer()
     File.close();
     return info;
 }
+
+double calculateDiscount(int loyaltyPoints)
+{
+    // Define the conversion rate of loyalty points to discount
+    const int POINTS_TO_DISCOUNT = 100;
+    const double DISCOUNT_RATE = 0.05; // 10% discount per 100 points
+
+    // Calculate the discount based on the loyalty points
+    int discountPoints = loyaltyPoints / POINTS_TO_DISCOUNT;
+    double discountAmount = discountPoints * DISCOUNT_RATE;
+
+    return discountAmount;
+}
+
 void generateTicketAndReceipt(Customer& customer) {
     // Generate and display the ticket
+    double discount = calculateDiscount(customer.loyaltyPoints);
+    int price = ticket.ticketPrice - discount;
+
     cout << "\n*** Ticket ***" << endl;
     cout << "Event: " << ticket.eventName << endl;
     cout << "Date: " << ticket.eventDate << endl;
@@ -131,8 +150,9 @@ void generateTicketAndReceipt(Customer& customer) {
     // Generate and display the receipt
     cout << "\n*** Receipt ***" << endl;
     cout << "Customer: " << customer.Fname << " " << customer.Lname << endl;
-     cout << "Event: " << ticket.eventName << endl;
-    cout << "Ticket Price: $" << fixed << setprecision(2) << ticket.ticketPrice << endl;
+    cout << "loyaltyPoints: " << customer.loyaltyPoints << endl;
+    cout << "Event: " << ticket.eventName << endl;
+    cout << "Ticket Price: $" << fixed << setprecision(2) << price << endl;
 
 
     // Provide a prepaid card
@@ -186,7 +206,7 @@ void delete_customer(int ID)
     while (File >> info.customer_ID >> info.Fname >> info.Lname >> info.age >> info.gender >> info.phone_number >> info.hasCriminalRecord >> info.loyaltyPoints)  {
         if (info.customer_ID != ID) {
             all_info.push_back(info);
-        } 
+        }
         else
         {
             count++;
@@ -208,7 +228,7 @@ void delete_customer(int ID)
         out_file << all_info[i].hasCriminalRecord << " ";
         out_file << all_info[i].loyaltyPoints << endl;
     }
-    
+
     out_file.close();
 
     if (count == 0) {
@@ -219,206 +239,3 @@ void delete_customer(int ID)
 }
 
 // Function to calculate price (I added a placeholder function)
-void calculate_price(fstream& File) {
-    cout << "Calculate price function called (placeholder).\n";
-}
-// Function to display all customer records
-void display_all_customer() {
-    int count = 0;
-    Customer info;
-
-    fstream File;
-    File.open("info.txt", ios::in);
-
-    if (!File.is_open()) {
-        cout << "Unable to open the file.\n";
-        return;
-    }
-
-    cout << "-------------------------------------------------------------------------------------------------------------------------\n";
-    cout << "CUSTOMERID" << "\t\tFIRST-NAME" << "\t\tLAST-NAME" << "\t\tAGE" << "\t\tGENDER" << "\t\tPHONE NUMBER" << "\t\tloyaltyPoints\n";
-    cout << "-----------------------------------------------------------------------------------------------------------------------------\n";
-
-    while (File >> info.customer_ID >> info.Fname >> info.Lname >> info.age >> info.gender >> info.phone_number >> info.hasCriminalRecord >> info.loyaltyPoints)  {
-        cout << info.customer_ID << setw(15) << "\t" << info.Fname << setw(15) << "\t" << info.Lname << setw(13) << "\t" << info.age << setw(13) << "\t" << info.gender << setw(13) << "\t" << info.phone_number << setw(13) << info.loyaltyPoints << endl;
-        count++;
-    }
-
-    File.close();
-}
-
-bool checkTravelerLegality( Customer customer) {
-    if (customer.age < 18) {
-        cout << "Sorry, " << customer.Fname << ", you must be at least 18 years old to travel.\n";
-        return false;
-    } 
-    else if (customer.hasCriminalRecord == 1) {
-        cout << "Sorry, " << customer.Fname << ", you are not allowed to travel due to a criminal record.\n";
-        return false;
-    }
-    else if(customer.Fname.length() > 0)  {
-    cout<< "passed the legality checks"<<endl;
-    return true;
-    }
-    return false;
-}
-
-void updateLoyaltyPoints() {
-    Customer info= search_customer();
-    int pointsToAdd;
-    if(checkTravelerLegality(info))
-    {
-        cout << "Enter the points to add: ";
-        cin >> pointsToAdd;
-        info.loyaltyPoints+=pointsToAdd;
-        delete_customer(info.customer_ID);
-
-        fstream File;
-        File.open("info.txt", ios::out | ios::app);
-        if (!File) {
-            cout << "File opening failed.\n";
-            exit(1);
-        }
-
-        
-        File << info.customer_ID << " ";
-        File << info.Fname << " ";
-        File << info.Lname << " ";
-        File << info.age << " ";
-        File << info.gender << " ";
-        File << info.phone_number << " ";
-        File <<info.hasCriminalRecord << " ";
-        File <<info.loyaltyPoints << endl;
-
-        // Add the customer to the vector
-
-        File.clear();
-        File.close();
-
-    }
-}
-
-void Reserve()
-{
-    int choice, row, col;
-    Customer user;
-    cout << "1.New customer" << endl;
-    cout << "2.Old customer" << endl;
-    do
-    {
-        cin >> choice;
-        if(choice==1)
-        {
-            user=add_customer();
-            break;
-        }
-        else if(choice==2)
-        {
-            user=search_customer();
-            break;
-        }
-        else
-            cout << "Invalid input" << endl;
-    } while (true);
-
-    if(checkTravelerLegality(user))
-    {
-        cout << "Enter the row and column to reserve (e.g., 2 3): ";
-        cin >> row >> col;
-        if (isSeatAvailable(row, col)) 
-        {
-            cout << "The seat is available.\n";
-            reserveSeat(row, col);
-
-            cout << "Enter the event name: ";
-            cin.ignore(); // Clear the newline character from the previous input
-            getline(cin, ticket.eventName);
-
-            cout << "Enter the event date: ";
-            getline(cin, ticket.eventDate);
-
-            ticket.ticketPrice=250;
-                // Generate and display the ticket and receipt
-            user.ticketNumber = rand() % 1000 + 1; // Generate a random ticket number
-        //info.ticketPrice = 250.0;
-            generateTicketAndReceipt(user);
-
-        }
-        else {
-            cout << "The seat is occupied.\n";
-            cout<< " pleas chose other seats.\n";
-        }
-    }
-    
-}
-int main() {
-    int choice, row, col, ID;
-    do {
-        cout << "----- Bus Management System -----\n";
-        cout << "1. Reserve a Seat\n";
-        cout << "2. Check Seat Availability\n";
-        cout << "3. DELETE CUSTOMER\n";
-        cout << "4. search_customer\n";
-        cout << "5. displaySeatingChart\n";
-        cout << "6. display_all_customer\n";
-        cout << "7. Check Traveler Legality (for managers)\n";
-        cout << "8. Update Loyalty Points\n";
-        cout << "0. Exit\n";
-        cout << "-------------------------------------------\n";
-        cout << "Enter your choice: ";
-        cin >> choice;
-    
-        switch (choice) {
-            case 1:
-                Reserve();
-                break;
-            case 2:
-                cout << "Enter the row and column to check availability (e.g., 2 3): ";
-                cin >> row >> col;
-                isSeatAvailable(row,col);
-                if (isSeatAvailable(row, col)) {
-                    cout << "The seat is available.\n";
-                } else {
-                    cout << "The seat is occupied.\n";
-                }
-                break;
-
-            case 3:
-                cout << "DELETE CUSTOMER" << endl;
-                cout << "Enter customer's ID you want to delete: ";
-                cin >> ID;
-                delete_customer(ID);
-                break;
-            case 4:
-                search_customer();
-                break;
-            case 5:
-                displaySeatingChart();
-                break;
-
-            case 6:
-                display_all_customer();
-                break;
-            case 7:
-                if (checkTravelerLegality(search_customer())) {
-                        cout << "Traveler is legal and can proceed.\n";
-                    }    
-                break;
-            case 8:
-                updateLoyaltyPoints();
-                break;
-
-            case 0:
-                cout << "Exiting the program.\n";
-                break;
-
-            default:
-                cout << "Invalid choice. Please try again.\n";
-                break;
-        }
-        cout << "Enter any key to go back";
-        cin.ignore();
-        cin.get();
-    } while (choice != 0);
-    return 0;
-}
